@@ -7,7 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MethodGuilt
 {
-    static String[] guiltMsgs = {"Guilt Msg1a", "Guilt Msg2b", "Guilt Msg3c"};
+    static String[] guiltMsgs = {
+        "Have you worked on anything productive lately?", 
+        "Have you cleaned up your home recently?", 
+        "When was the last time you've done your dishes?"};
 
     MethodGuilt()
     {

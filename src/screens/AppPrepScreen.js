@@ -101,12 +101,13 @@ class AppPrepScreen extends Component {
           />
         </View>
 
-        <View>
+        {/* <View>
           <Button
-            title="Refresh"
-            onPress={() => {this.forceUpdate()}}
+            title="Start Trial Period"
+            //onPress={() => {this.forceUpdate()}}
+            onPress={() => {startTrialPeriod()}}
           />
-        </View>
+        </View> */}
 
         <View>
           <Button
@@ -141,16 +142,6 @@ class AppPrepScreen extends Component {
   }
 
 }
-   
-function refreshUIBecauseFuckJavascript()
-{
-  if(refreshedOnce == 0)
-  {
-    refreshedOnce = 1;
-    location.reload(false);
-    setTimeout(refreshUIBecauseFuckJavascript, 5000);
-  }
-}
 
 function confirmApps(state)
 {
@@ -184,7 +175,9 @@ function confirmApps(state)
 
   ToastExample.sendAppString(exportList);
   //ToastExample.setModeToStrict();
-  ToastExample.setModeToTrial();
+  //ToastExample.setModeToGuilt();
+  ToastExample.setModeToReflect();
+  //ToastExample.setModeToTrial();
 
   //ToastExample.sendGuiltMessage1("beeble 1");
   //ToastExample.sendGuiltMessage2("beeble 2");

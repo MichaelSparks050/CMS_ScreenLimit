@@ -8,6 +8,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import {Context as AuthContext} from '../context/AuthContext';
 import '../components/globals';
 
+import ToastExample from '../../android/app/src/main/java/com/secondtestproj/ToastExample';
 
 //This is a nice optional insentive for users to try out the most basic portion of our app and see if they want to continue with us.
 const TrialScreen = ({navigation}) => {
@@ -48,8 +49,9 @@ const TrialScreen = ({navigation}) => {
                     ]}
                 />
                 <Button
-                    title = 'Begin My Timed Trial'
-                    onPress={() => trialSignUp({timeParameters})}      
+                    title = '3Begin My Timed Trial3'
+                    //onPress={() => trialSignUp({timeParameters})}      startTrialPeriod()
+                    onPress={() => {ToastExample.startTrialPeriod()}}
                     buttonStyle={{ backgroundColor: '#4682b4' }}
                 />
                 <Button

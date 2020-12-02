@@ -8,6 +8,8 @@ import {NavigationEvents} from 'react-navigation';
 import '../components/globals';
 import {Context as AuthContext} from '../context/AuthContext';
 
+import ToastExample from '../../android/app/src/main/java/com/secondtestproj/ToastExample';
+
 //Login Screen: This will be the screen a user will navigate to FROM the New User Screen if they are a returning User.
 const LoginScreen = ({navigation}) => {
   const { state, signin, clearErrorMessage } = useContext(AuthContext);
@@ -35,6 +37,13 @@ const LoginScreen = ({navigation}) => {
             autoCorrect = {false}
             secureTextEntry
           />
+
+        <View>
+          <Button
+            title="Check If Trial Going"
+            onPress={() => {callBackTrialTest()}}
+          />
+        </View>
 
           <View style={styles.subContainer}> 
             <Button
@@ -106,5 +115,33 @@ const styles = StyleSheet.create({
     fontSize: 14,
   }
 });
+
+function callBackTrialTest()
+{
+  ToastExample.isTrialStillGoing(
+    (err) => {
+      console.log(err);
+    },
+    (msg) => {
+      console.log("isTrialStillGoing " + msg);
+      getTrialResponse(msg);
+    },
+  );
+
+}
+
+
+function getTrialResponse(argument)
+{  
+  if(argument == true)
+  {
+    ToastExample.printTrue();
+  }
+  else
+  {
+    ToastExample.printFalse();
+  }
+  
+}
 
 export default LoginScreen;

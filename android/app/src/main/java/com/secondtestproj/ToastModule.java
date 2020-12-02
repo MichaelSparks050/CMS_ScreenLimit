@@ -79,6 +79,36 @@ public class ToastModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void printTrue()
+  {
+    Toast.makeText(getReactApplicationContext(), "Trial IS Happening", 1).show();
+  }
+
+  @ReactMethod
+  public void printFalse()
+  {
+    Toast.makeText(getReactApplicationContext(), "Trial NOT Happening", 1).show();
+  }
+
+  @ReactMethod
+  public void startTrialPeriod()
+  {
+    MainActivity.myActivity.startTrialPeriod();
+  }
+
+  @ReactMethod
+  public void stopTrialPeriod()
+  {
+    MainActivity.myActivity.stopTrialPeriod();
+  }
+
+  @ReactMethod
+  public void isTrialStillGoing(Callback errorCallback, Callback successCallback)
+  {
+    successCallback.invoke(MainActivity.myActivity.isTrialStillGoing());
+  }
+
+  @ReactMethod
   public void getListOfApps(Callback errorCallback, Callback successCallback){
     String appReturnString = MainActivity.myActivity.getListOfApps();
     successCallback.invoke(appReturnString);

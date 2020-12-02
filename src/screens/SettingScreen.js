@@ -5,6 +5,8 @@ import {NavigationEvents} from 'react-navigation';
 import {Input, Button, Text} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 
+import ToastExample from '../../android/app/src/main/java/com/secondtestproj/ToastExample';
+
 //Local Imports
 import MethodExDetails from '../components/MethodExDetails';
 import {Context as AuthContext} from '../context/AuthContext';

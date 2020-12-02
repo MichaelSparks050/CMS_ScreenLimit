@@ -19,6 +19,11 @@ import {setNavigator} from './src/navigationRef'
 
 import ToastExample from './android/app/src/main/java/com/secondtestproj/ToastExample';
 
+
+
+
+
+
 const switchNavigator = createSwitchNavigator({
   Resolve: ResolveAuthScreen,
   loginFlow: createStackNavigator({
@@ -44,4 +49,18 @@ export default () => {
       <App ref = {(navigator) => {setNavigator(navigator);}} />
     </AuthProvider>
   );
+
+  function getTrialResponse(argument)
+  {
+    if(argument == true)
+    {
+      ToastExample.printTrue();
+    }
+    else
+    {
+      ToastExample.printFalse();
+    }
+    
+  }
+
 };

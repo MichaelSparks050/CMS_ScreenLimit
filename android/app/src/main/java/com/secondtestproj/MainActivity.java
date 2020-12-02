@@ -14,6 +14,8 @@ import android.os.Binder;
 
 import android.content.ComponentName;
 
+import android.content.SharedPreferences;
+
 import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
 //import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -214,6 +216,59 @@ public void giveAlarmString(String p)
       super.onCreate(savedInstanceState);
       //setContentView(R.layout.activity_main);
 
+      //SharedPreferences pref = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+      //pref.edit().clear().commit();
+
+      Toast.makeText(getApplicationContext(), "", 
+      Toast.LENGTH_LONG).show();   
+      Toast.makeText(getApplicationContext(), "", 
+      Toast.LENGTH_LONG).show();   
+
+      
+      FileManager fileManager = new FileManager(getApplicationContext());
+
+      if(fileManager.isUserIDWritten() == true)
+      {
+        Toast.makeText(getApplicationContext(), "BU UserID " + fileManager.readUserId(), 
+          Toast.LENGTH_LONG).show();   
+        broadcastUserID(fileManager.readUserId());
+      }
+      else
+      {
+        Toast.makeText(getApplicationContext(), "BU UserID not written", Toast.LENGTH_LONG).show();   
+      }
+
+      if(fileManager.isAppStringWritten())
+      {
+        Toast.makeText(getApplicationContext(), "BU AppList " + fileManager.readAppString(), 
+          Toast.LENGTH_LONG).show();   
+        broadcastAppString(fileManager.readAppString());
+      }
+      else
+      {
+        Toast.makeText(getApplicationContext(), "BU AppList not written", Toast.LENGTH_LONG).show();   
+      }
+
+      if(fileManager.isUserMethodWritten())
+      {
+        Toast.makeText(getApplicationContext(), "BU UserMethod " + fileManager.readUserMethod(), 
+          Toast.LENGTH_LONG).show();   
+        broadcastAppMode(Integer.toString(fileManager.readUserMethod()));
+      }
+      else
+      {
+        Toast.makeText(getApplicationContext(), "BU UserMethod not written", Toast.LENGTH_LONG).show();   
+      }
+
+      if(
+        fileManager.isUserIDWritten() &&
+        fileManager.isAppStringWritten() &&
+        fileManager.isUserMethodWritten()
+      )
+      {
+        startChecker();
+      }
+
     //TimeSlice timeSlice = new TimeSlice();
     //timeSlice.check("com.whatever.youtube", (long)50000);
 
@@ -259,6 +314,52 @@ public void giveAlarmString(String p)
 
       //myService.setMainActivity(this);
 
+  }
+
+  public void startTrialPeriod()
+  {
+    FileManager fileManager = new FileManager(getApplicationContext());
+    
+    fileManager.writeTrialStart(System.currentTimeMillis());
+  }
+
+  public void stopTrialPeriod()
+  {
+    FileManager fileManager = new FileManager(getApplicationContext());
+    
+    fileManager.writeTrialStart(-1);
+  }
+
+  public boolean isTrialStillGoing()
+  {
+    FileManager fileManager = new FileManager(getApplicationContext());
+
+    if(fileManager.isTrialStartWritten())
+    {
+      long trialStart = fileManager.readTrialStart();
+      if(trialStart == -1)
+      {
+        return false;
+      }
+      else
+      {
+        long trialLength = System.currentTimeMillis() - trialStart;
+
+        if(trialLength < 180000) //this is 3 minutes in milliseconds
+        //if(trialLength > 1209600000)//this is 2 weeks in milliseconds
+        {                             //14days*24hours*60mins*60secs*1000millis
+          return true;
+        }
+        else //not enough time has passed
+        {
+          return false;
+        }
+      }
+    }
+    else
+    {
+      return false;
+    }
   }
 
   public void toggleAlarm()
@@ -336,6 +437,11 @@ public void giveAlarmString(String p)
 
   public void broadcastAppString(String appString)
   {
+    FileManager fileManager = new FileManager(getApplicationContext());
+    fileManager.writeAppString(appString);
+
+
+
     Intent intent = new Intent("my.action.appString");
     intent.putExtra("extra", appString);
 
@@ -349,6 +455,10 @@ public void giveAlarmString(String p)
 
   public void broadcastAppMode(String appMode)
   {
+    FileManager fileManager = new FileManager(getApplicationContext());
+    fileManager.writeUserMethod(Integer.parseInt(appMode));
+
+
     Intent intent = new Intent("my.action.appMode");
     intent.putExtra("extra", appMode);
 
@@ -371,6 +481,10 @@ public void giveAlarmString(String p)
 
   public void broadcastUserID(String ID)
   {
+    FileManager fileManager = new FileManager(getApplicationContext());
+    fileManager.writeUserId(ID);
+
+
     Intent intent = new Intent("my.action.userID");
     intent.putExtra("extra", ID);
 
